@@ -10,11 +10,11 @@ import (
 	s "strings"
 )
 
-var dict map[string]struct{}
+var wordDict map[string]bool
 
 func main() {
 
-	dict = readDictionaryFile()
+	wordDict = readDictionaryFile()
 
 	http.HandleFunc("/", HelloServer)
 	http.ListenAndServe(":8080", nil)
@@ -25,13 +25,24 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 	var splitRequestStr = s.Split(s.ToLower(r.URL.Path[1:]), ":")
 	fmt.Fprintln(w, len(splitRequestStr))
 
-	var gridSize = Isqrt(len(splitRequestStr[0]))
+	var characterGrid = splitRequestStr[0]
+	var gridSize = Isqrt(len(characterGrid))
 	fmt.Fprintf(w, "Grid is %dx%d\n", gridSize, gridSize)
+
+	for i := 0; i < gridSize*gridSize; i++ {
+		if i % gridSize == 0 {
+			fmt.Fprintln(w)
+		}
+		fmt.Fprintf(w, "%c", characterGrid[i])
+
+	}
+
+	fmt.Fprintln(w)
 
 	var wordLengths = s.Split(splitRequestStr[1], ",")
 	fmt.Fprintf(w, "Word lengths are %s\n", wordLengths)
 
-	fmt.Fprintf(w, "Dict length is %d\n", len(dict))
+	fmt.Fprintf(w, "Dict length is %d\n", len(wordDict))
 
 }
 
@@ -44,7 +55,7 @@ func wordInDictionary() bool {
 	return false
 }
 
-func readDictionaryFile() map[string]struct{} {
+func readDictionaryFile() map[string]bool {
 	file, err := os.Open("john.txt")
 
 	if err != nil {
@@ -54,10 +65,12 @@ func readDictionaryFile() map[string]struct{} {
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 
-	dictLines := make(map[string]struct{})
+	dictLines := make(map[string]bool)
 
+	var line string
 	for scanner.Scan() {
-		dictLines[scanner.Text()] = struct{}{}
+		line = scanner.Text()
+		dictLines[line] = true
 	}
 	return dictLines
 }

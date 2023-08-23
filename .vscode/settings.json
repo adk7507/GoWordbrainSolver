@@ -1,4 +1,13 @@
 {
     "appService.defaultWebAppToDeploy": "/subscriptions/14d3e745-bfcc-4f8b-bb11-3c8948a311f4/resourceGroups/WordbrainSolverService_group/providers/Microsoft.Web/sites/WordbrainSolverService",
-    "appService.deploySubpath": "."
+    "appService.deploySubpath": ".",
+    
+    "[go]": {
+
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": false
+        },
+    },
+    "go.formatTool": "gofmt",
 }
