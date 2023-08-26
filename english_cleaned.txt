@@ -13323,7 +13323,6 @@ anthyllis
 anthypophora
 anthypophoretic
 anti
-anti-antiabolitionist
 antiabortion
 antiabortionist
 antiabrasion
@@ -26142,7 +26141,6 @@ baselard
 baseless
 baselessly
 baselessness
-baselessness'
 baselessnesses
 baselevel
 baselike
@@ -38260,7 +38258,6 @@ bromocyanide
 bromocyanogen
 bromodroses
 bromodrosis
-bromodrosis'
 bromoethylene
 bromoform
 bromogelatin
@@ -88291,7 +88288,6 @@ dyvours
 dzeren
 dzungar
 e
-e.g
 ea
 each
 eachwhere
@@ -136086,7 +136082,6 @@ hystricomorphous
 hystrix
 hyte
 i
-i.e
 ia
 iacchic
 iacchos
@@ -181139,7 +181134,6 @@ multanimous
 multarticulate
 multeity
 multi
-multi-
 multiage
 multiagency
 multiangular
@@ -214622,7 +214616,6 @@ pfft
 pfizer
 pfui
 pfund
-ph.d
 phaca
 phacelia
 phacelite
@@ -307164,7 +307157,6 @@ trewsman
 trey
 treys
 tri
-tri-
 triable
 triableness
 triac
@@ -311932,8 +311924,6 @@ tzotzil
 tzuris
 tzutuhil
 u
-u.s
-u.s.a
 uakari
 uakaris
 uang
@@ -355939,7 +355929,6 @@ dekalitre
 dekameter
 dekametre
 dekko
-del.icio.us
 delairea
 delaware
 delay
@@ -362721,7 +362710,6 @@ gyro
 gyromitra
 gyroscope
 gyrus
-h2o
 haastia
 habenaria
 habergeon
@@ -364103,8 +364091,6 @@ hoya
 hoyden
 hoydenish
 hoydenism
-hs1
-hs2
 hsian
 html
 http
@@ -365939,7 +365925,6 @@ jutting
 juvenile
 juxtapose
 jynx
-k2
 kabala
 kabbala
 kabbalah
@@ -386477,7 +386462,6 @@ usurp
 usurped
 usurper
 usury
-ut1
 uta
 utah
 utahan
@@ -387604,7 +387588,7 @@ web
 webbed
 webbing
 webby
-webdesign 
+webdesign
 weber
 webfoot
 weblike
