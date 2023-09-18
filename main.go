@@ -14,9 +14,9 @@ var wordDict map[string]bool
 func main() {
 
 	// Dictionary tree
-    // myTrie := trieInit()
+    myTrie := trieInit()
 
-	// wordDict = myTrie.readDictionaryFile("english_cleaned.txt")
+	myTrie.readDictionaryFile("english_cleaned.txt")
 
     // words_Search := []string{"aqua", "pinkertony", "card", "care","cat", "dog","can"}
     // for  _, wr := range words_Search {
@@ -29,17 +29,37 @@ func main() {
     // }
 
 	// Board
-	b := buildBoard([]rune{'a','b','c','d','e','f','g','h','i'}, 3)
+	chars := "abcdefghijklmnop"
+	size := 4
+	b := buildBoard(chars, size)
+	if( b == nil) {
+		fmt.Fprintf(os.Stderr, "buildBoard returned nil\nInput 1: %s\nInput 2: %d\n", chars, size)
+		os.Exit(-1)
+	}
+
 	for i := range b.characters {
 		fmt.Printf("%d - %c - ", i, b.characters[i])
 		fmt.Println(b.neighbors[i].indices)
 	}
 
-	fmt.Printf("%c neighbors: \n", b.characters[0])
-	npl := b.getNeighborCharacters(0)
-	for _, np := range(npl) {
-		fmt.Printf("%d - %c\n", np.index, np.char)
+	firstCharIdx := 5
+
+	fmt.Printf("%c neighbors: \n", b.characters[firstCharIdx])
+	npl := b.getNeighborCharacters(firstCharIdx)
+
+	firstCharNode := myTrie.root.searchPartial(b.characters[firstCharIdx])
+	if firstCharNode != nil {
+		for _, np := range(npl) {
+			//fmt.Printf("%d - %c\n", np.index, np.char)
+			secondCharNode := firstCharNode.searchPartial(np.char)
+			if(secondCharNode != nil) {
+				fmt.Printf("%c%c found in dict\n", b.characters[firstCharIdx], np.char)
+			} else {
+				fmt.Printf("%c%c NOT in dict\n", b.characters[firstCharIdx], np.char)
+			}
+		}
 	}
+	
 
 	// http.HandleFunc("/", HelloServer)
 	// http.ListenAndServe(":8080", nil)
@@ -77,7 +97,7 @@ func Isqrt(n int) int {
 }
 
 // Builds a trie and a map for timing comparison later
-func (t *trie) readDictionaryFile(filename string) map[string]bool {
+func (t *trie) readDictionaryFile(filename string) {
 	file, err := os.Open(filename)
 
 	if err != nil {
@@ -87,14 +107,10 @@ func (t *trie) readDictionaryFile(filename string) map[string]bool {
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 
-	dictLines := make(map[string]bool)
-
 	var line string
 	for scanner.Scan() {
 		line = scanner.Text()
-		dictLines[line] = true
 		t.insert(line)
 	}
-	return dictLines
 }
 

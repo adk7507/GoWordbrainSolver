@@ -6,6 +6,12 @@ type trieNode struct {
     wordEnds bool
 }
 
+// Search branch beginning with a specific trie node
+func (n *trieNode) searchPartial(letter rune) *trieNode {
+    index := letter - 'a'
+    return n.children[index]
+}
+
 type trie struct {
     root *trieNode
 }
@@ -51,9 +57,5 @@ func (t *trie) search(word string) int {
     return -1
 }
 
-// // Search branch beginning with a specific trie node
-// func (node *trieNode) searchPartial(letter rune) *trieNode {
-//     index := letter - 'a'
-//     return node.children[index]
-// }
+
 

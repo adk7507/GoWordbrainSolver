@@ -1,5 +1,7 @@
 package main
-
+import(
+	"fmt"
+)
 type board struct {
 	size int
 	len int
@@ -16,13 +18,15 @@ type neighborPiece struct {
 	index int
 }
 
-func buildBoard(chars []rune, size int) *board {
-	b := new(board)
+func buildBoard(chars string, size int) *board {
+	
 	if size*size == len(chars) {
+		b := new(board)
 		b.size = size
 		b.len = len(chars)
-		b.characters = chars
-
+		fmt.Println(chars)
+		b.characters = []rune(chars)
+		fmt.Println(b.characters)
 		// connect neighbors
 		for i := range chars {
 			r := i / size
@@ -41,8 +45,9 @@ func buildBoard(chars []rune, size int) *board {
 
 			b.neighbors = append(b.neighbors, currentNeighbors)
 		}
+		return b
 	}
-	return b
+	return nil
 }
 
 // func getNeighborCharacters
