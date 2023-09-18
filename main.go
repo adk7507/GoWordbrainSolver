@@ -12,22 +12,37 @@ import (
 
 var wordDict map[string]bool
 func main() {
-    trie := trieInit()
 
-	wordDict = trie.readDictionaryFile("english_cleaned.txt")
+	// Dictionary tree
+    // myTrie := trieInit()
 
-    words_Search := []string{"aqua", "jack", "card", "care","cat", "dog","can"}
-    for  _, wr := range words_Search {
-        found := trie.search(wr)
-        if found == 1 {
-            fmt.Printf("\"%s\" Word found in trie\n", wr)
-        } else {
-            fmt.Printf(" \"%s\" Word not found in trie\n", wr)
-        }
-    }
+	// wordDict = myTrie.readDictionaryFile("english_cleaned.txt")
 
-	http.HandleFunc("/", HelloServer)
-	http.ListenAndServe(":8080", nil)
+    // words_Search := []string{"aqua", "pinkertony", "card", "care","cat", "dog","can"}
+    // for  _, wr := range words_Search {
+    //     found := myTrie.search(wr)
+    //     if found == 1 {
+    //         fmt.Printf("\"%s\" found in trie\n", wr)
+    //     } else {
+    //         fmt.Printf(" \"%s\" NOT found in trie\n", wr)
+    //     }
+    // }
+
+	// Board
+	b := buildBoard([]rune{'a','b','c','d','e','f','g','h','i'}, 3)
+	for i := range b.characters {
+		fmt.Printf("%d - %c - ", i, b.characters[i])
+		fmt.Println(b.neighbors[i].indices)
+	}
+
+	fmt.Printf("%c neighbors: \n", b.characters[0])
+	npl := b.getNeighborCharacters(0)
+	for _, np := range(npl) {
+		fmt.Printf("%d - %c\n", np.index, np.char)
+	}
+
+	// http.HandleFunc("/", HelloServer)
+	// http.ListenAndServe(":8080", nil)
 }
 
 

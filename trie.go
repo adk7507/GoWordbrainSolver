@@ -51,9 +51,9 @@ func (t *trie) search(word string) int {
     return -1
 }
 
-// Search branch beginning with a specific trie node
-func (node *trieNode) searchPartial(letter rune) *trieNode {
-    index := letter - 'a'
-    return node.children[index]
-}
+// // Search branch beginning with a specific trie node
+// func (node *trieNode) searchPartial(letter rune) *trieNode {
+//     index := letter - 'a'
+//     return node.children[index]
+// }
 
