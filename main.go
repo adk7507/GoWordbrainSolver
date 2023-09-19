@@ -42,27 +42,32 @@ func main() {
 		fmt.Println(b.neighbors[i].indices)
 	}
 
-	firstCharIdx := 5
+	b.printBoard("b")
+	newBoard := b.removeWord([]int {0, 4, 8, 5, 9, 13, 2, 6, 10 , 14})
+	newBoard.printBoard("newBoard")
 
-	fmt.Printf("%c neighbors: \n", b.characters[firstCharIdx])
-	npl := b.getNeighborCharacters(firstCharIdx)
+	// http.HandleFunc("/", HelloServer)
+	// http.ListenAndServe(":8080", nil)
+}
 
-	firstCharNode := myTrie.root.searchPartial(b.characters[firstCharIdx])
+// func buildWord
+func buildWord(gameBoard *board, dict *trie, firstCharIdx int) {
+
+	fmt.Printf("%c neighbors: \n", gameBoard.characters[firstCharIdx])
+	npl := gameBoard.getNeighborCharacters(firstCharIdx)
+
+	firstCharNode := dict.root.searchPartial(gameBoard.characters[firstCharIdx])
 	if firstCharNode != nil {
 		for _, np := range(npl) {
 			//fmt.Printf("%d - %c\n", np.index, np.char)
 			secondCharNode := firstCharNode.searchPartial(np.char)
 			if(secondCharNode != nil) {
-				fmt.Printf("%c%c found in dict\n", b.characters[firstCharIdx], np.char)
+				fmt.Printf("%c%c found in dict\n", gameBoard.characters[firstCharIdx], np.char)
 			} else {
-				fmt.Printf("%c%c NOT in dict\n", b.characters[firstCharIdx], np.char)
+				fmt.Printf("%c%c NOT in dict\n", gameBoard.characters[firstCharIdx], np.char)
 			}
 		}
 	}
-	
-
-	// http.HandleFunc("/", HelloServer)
-	// http.ListenAndServe(":8080", nil)
 }
 
 

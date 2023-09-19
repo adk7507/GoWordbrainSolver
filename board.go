@@ -69,6 +69,42 @@ func (b *board) getNeighborCharacters(idx int) []neighborPiece {
 }
 
 // func removeWord
+func (b *board) removeWord(indices []int) board {
+	var retBoard board
+
+	retBoard.len = b.len
+	retBoard.characters = b.characters
+	retBoard.neighbors = append(retBoard.neighbors, b.neighbors...)
+	retBoard.size = b.size
+
+	// blank the used letters
+	for _, i := range indices {
+		retBoard.characters[i] = ' '
+	}
+
+	// collapse the grid down onto the blanks
+	for i := retBoard.len - 1; i >= 0; i-- {
+		if retBoard.characters[i] == ' ' {
+			for j := i - retBoard.size; j >= 0; j -= retBoard.size {
+				if retBoard.characters[j] != ' ' {
+					retBoard.characters[i] = retBoard.characters[j]
+					retBoard.characters[j] = ' '
+					break
+				}
+			}
+		}
+	}
+
+	return retBoard
+}
 
 // func
-
+func (b *board) printBoard(name string) {
+	fmt.Println(name)
+	for i := 0; i < b.size; i++ {
+		for j := 0; j < b.size; j++ {
+			fmt.Printf("%c", b.characters[i*b.size + j])
+		}
+		fmt.Println()
+	}
+}
