@@ -1,36 +1,36 @@
 package main
 
 
-type trieNode struct {
-    children [26]*trieNode
+type dictionaryNode struct {
+    children [26]*dictionaryNode
     wordEnds bool
 }
 
 // Search branch beginning with a specific trie node
-func (n *trieNode) searchPartial(letter rune) *trieNode {
+func (n *dictionaryNode) findNode(letter rune) *dictionaryNode {
     index := letter - 'a'
     return n.children[index]
 }
 
-type trie struct {
-    root *trieNode
+type dictionary struct {
+    root *dictionaryNode
 }
 
-//inititlaizing a new trie 
-func trieInit() *trie {
-    t := new(trie)
-    t.root = new(trieNode)
+//inititlaizing a new dictionary trie 
+func trieInit() *dictionary {
+    t := new(dictionary)
+    t.root = new(dictionaryNode)
     return t
 }
 
 // Inserting words into trie
-func (t *trie) insert(word string) {
+func (t *dictionary) insert(word string) {
     current := t.root
     for _, letter := range word {
         index := letter - 'a'
 
         if current.children[index] == nil {
-            current.children[index] = new(trieNode)
+            current.children[index] = new(dictionaryNode)
         }
         current = current.children[index]
     }
@@ -41,7 +41,7 @@ func (t *trie) insert(word string) {
 // 1  = complete word found
 // -1 = trie branch exists, but it is an incomplete word
 // 0  = no such branch found
-func (t *trie) search(word string) int {
+func (t *dictionary) search(word string) int {
     node := t.root
     for _, letter := range word {
         index := letter - 'a'

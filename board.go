@@ -13,7 +13,7 @@ type neighborIdxList struct {
 	indices []int
 }
 
-type neighborPiece struct {
+type neighborTile struct {
 	char rune
 	index int
 }
@@ -37,7 +37,7 @@ func buildBoard(chars string, size int) *board {
 
 			var currentNeighbors neighborIdxList
 
-			for ci, _ := range neighborCols {
+			for ci := range neighborCols {
 				if neighborCols[ci] >= 0 && neighborCols[ci] < b.size && neighborRows[ci] >= 0 && neighborRows[ci] < b.size {
 					currentNeighbors.indices = append(currentNeighbors.indices, neighborRows[ci] * b.size + neighborCols[ci])
 				}
@@ -50,15 +50,15 @@ func buildBoard(chars string, size int) *board {
 	return nil
 }
 
-// func getNeighborCharacters
-func (b *board) getNeighborCharacters(idx int) []neighborPiece {
-	var nl []neighborPiece
+// func getNeighborTiles
+func (b *board) getNeighborTiles(idx int) []neighborTile {
+	var nl []neighborTile
 
 	
 	if b.characters[idx] != ' ' {
 		for _, ni := range b.neighbors[idx].indices {
 			if b.characters[ni] != ' ' {
-				var np neighborPiece
+				var np neighborTile
 				np.char = b.characters[ni]
 				np.index = ni
 				nl = append(nl, np)
@@ -73,8 +73,8 @@ func (b *board) removeWord(indices []int) board {
 	var retBoard board
 
 	retBoard.len = b.len
-	retBoard.characters = b.characters
-	retBoard.neighbors = append(retBoard.neighbors, b.neighbors...)
+	retBoard.characters = append(retBoard.characters, b.characters...)
+	retBoard.neighbors = b.neighbors
 	retBoard.size = b.size
 
 	// blank the used letters

@@ -8,6 +8,7 @@ import (
 	"os"
 	"bufio"
 	"log"
+	"slices"
 )
 
 var wordDict map[string]bool
@@ -29,7 +30,7 @@ func main() {
     // }
 
 	// Board
-	chars := "abcdefghijklmnop"
+	chars := "catsaxxxslxxtexx"
 	size := 4
 	b := buildBoard(chars, size)
 	if( b == nil) {
@@ -42,32 +43,35 @@ func main() {
 		fmt.Println(b.neighbors[i].indices)
 	}
 
-	b.printBoard("b")
-	newBoard := b.removeWord([]int {0, 4, 8, 5, 9, 13, 2, 6, 10 , 14})
-	newBoard.printBoard("newBoard")
+	findWord(b, myTrie.root, 0, []int{}, 6)
 
 	// http.HandleFunc("/", HelloServer)
 	// http.ListenAndServe(":8080", nil)
 }
 
-// func buildWord
-func buildWord(gameBoard *board, dict *trie, firstCharIdx int) {
+func findWord(gameBoard *board, dn *dictionaryNode, currentTileIdx int, visitedTiles [] int, length int) []int {
 
-	fmt.Printf("%c neighbors: \n", gameBoard.characters[firstCharIdx])
-	npl := gameBoard.getNeighborCharacters(firstCharIdx)
-
-	firstCharNode := dict.root.searchPartial(gameBoard.characters[firstCharIdx])
-	if firstCharNode != nil {
-		for _, np := range(npl) {
-			//fmt.Printf("%d - %c\n", np.index, np.char)
-			secondCharNode := firstCharNode.searchPartial(np.char)
-			if(secondCharNode != nil) {
-				fmt.Printf("%c%c found in dict\n", gameBoard.characters[firstCharIdx], np.char)
+	currentDictionaryNode := dn.findNode(gameBoard.characters[currentTileIdx])
+	if currentDictionaryNode != nil {
+		visitedTiles = append(visitedTiles, currentTileIdx)
+		neighborTiles := gameBoard.getNeighborTiles(currentTileIdx)
+		for _, nt := range neighborTiles  {
+			if length > 1 {
+				if !slices.Contains(visitedTiles, nt.index) {
+					findWord(gameBoard, currentDictionaryNode, nt.index, visitedTiles, length-1)
+				} 
 			} else {
-				fmt.Printf("%c%c NOT in dict\n", gameBoard.characters[firstCharIdx], np.char)
-			}
+				if currentDictionaryNode.wordEnds {
+					for j := range visitedTiles {
+						fmt.Printf("%c", gameBoard.characters[visitedTiles[j]])
+					}
+					fmt.Println()
+					return visitedTiles
+				}
+			}				
 		}
-	}
+	} 
+	return []int {}
 }
 
 
@@ -102,7 +106,7 @@ func Isqrt(n int) int {
 }
 
 // Builds a trie and a map for timing comparison later
-func (t *trie) readDictionaryFile(filename string) {
+func (t *dictionary) readDictionaryFile(filename string) {
 	file, err := os.Open(filename)
 
 	if err != nil {
