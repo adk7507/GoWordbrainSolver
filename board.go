@@ -4,7 +4,7 @@ import(
 )
 type board struct {
 	size int
-	len int
+	length int
 	characters []rune
 	neighbors []neighborIdxList
 }
@@ -23,7 +23,7 @@ func buildBoard(chars string, size int) *board {
 	if size*size == len(chars) {
 		b := new(board)
 		b.size = size
-		b.len = len(chars)
+		b.length = len(chars)
 		fmt.Println(chars)
 		b.characters = []rune(chars)
 		fmt.Println(b.characters)
@@ -69,10 +69,10 @@ func (b *board) getNeighborTiles(idx int) []neighborTile {
 }
 
 // func removeWord
-func (b *board) removeWord(indices []int) board {
+func (b *board) removeWord(indices []int) *board {
 	var retBoard board
 
-	retBoard.len = b.len
+	retBoard.length = b.length
 	retBoard.characters = append(retBoard.characters, b.characters...)
 	retBoard.neighbors = b.neighbors
 	retBoard.size = b.size
@@ -83,7 +83,7 @@ func (b *board) removeWord(indices []int) board {
 	}
 
 	// collapse the grid down onto the blanks
-	for i := retBoard.len - 1; i >= 0; i-- {
+	for i := retBoard.length - 1; i >= 0; i-- {
 		if retBoard.characters[i] == ' ' {
 			for j := i - retBoard.size; j >= 0; j -= retBoard.size {
 				if retBoard.characters[j] != ' ' {
@@ -95,7 +95,7 @@ func (b *board) removeWord(indices []int) board {
 		}
 	}
 
-	return retBoard
+	return &retBoard
 }
 
 // func

@@ -1,37 +1,32 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
+	"slices"
 	"sort"
 	s "strings"
-	"os"
-	"bufio"
-	"log"
-	"slices"
 )
 
-var wordDict map[string]bool
+
 func main() {
-
-	// Dictionary tree
-    myTrie := trieInit()
-
-	myTrie.readDictionaryFile("english_cleaned.txt")
-
-    // words_Search := []string{"aqua", "pinkertony", "card", "care","cat", "dog","can"}
-    // for  _, wr := range words_Search {
-    //     found := myTrie.search(wr)
-    //     if found == 1 {
-    //         fmt.Printf("\"%s\" found in trie\n", wr)
-    //     } else {
-    //         fmt.Printf(" \"%s\" NOT found in trie\n", wr)
-    //     }
-    // }
-
 	// Board
-	chars := "catsaxxxslxxtexx"
-	size := 4
+	chars := "bpnieommaretvpisroamdotiv"
+	size := 5
+	wordLengths := []int{4, 7, 7, 7}
+
+
+
+	// The dictionary of truth (and some extra "words")
+    dict := trieInit()
+	dict.readDictionaryFile("english_cleaned.txt")
+
+
+
+
 	b := buildBoard(chars, size)
 	if( b == nil) {
 		fmt.Fprintf(os.Stderr, "buildBoard returned nil\nInput 1: %s\nInput 2: %d\n", chars, size)
@@ -43,35 +38,110 @@ func main() {
 		fmt.Println(b.neighbors[i].indices)
 	}
 
-	findWord(b, myTrie.root, 0, []int{}, 6)
+	b.printBoard("Game Board: ")
+
+	rootWord := searchResultTree {
+		letters: "ROOT",
+		indices: []int{-1,-1,-1,-1},
+		collapsedBoard: b,
+		sourceBoard: b,
+	}
+
+	// for j := 0; j < b.length; j++ {
+	// 	findWordLetters(dict.root, j, []int{}, 3, []rune{}, &rootWord)
+	// }
+
+	findPhraseWords(dict.root, wordLengths, &rootWord, 0)
+
+	printSubtree(&rootWord, "", len(wordLengths))
+
 
 	// http.HandleFunc("/", HelloServer)
 	// http.ListenAndServe(":8080", nil)
 }
 
-func findWord(gameBoard *board, dn *dictionaryNode, currentTileIdx int, visitedTiles [] int, length int) []int {
+func printSubtree(word *searchResultTree, prev string, depth int) {
+	newStr := fmt.Sprintf("%s %s", prev, word.letters)
+	if depth == 0 {
+		fmt.Printf("%d %s\n", depth, newStr)
+	} else {
+		for ci := 0; ci < len(word.nextWords); ci++ {
+			printSubtree(word.nextWords[ci], newStr, depth - 1)
+		}
+	}
+}
 
-	currentDictionaryNode := dn.findNode(gameBoard.characters[currentTileIdx])
-	if currentDictionaryNode != nil {
+// func pruneResultTree(rootWord *boardWord, depth int) int {
+// 	if rootWord.nextWords == nil {
+// 		return 0
+// 	}
+// 	for i, w := range rootWord.nextWords {
+// 		nextDepth := pruneResultTree(w, depth - 1)
+// 		if nextDepth < depth - 1
+// 	}
+
+// }
+
+func findPhraseWords(dictRoot *dictionaryNode, wordLenghts []int, parentWord *searchResultTree, level int) {
+
+	if len(wordLenghts) == 0 {
+		return
+	}
+
+	wordLength := wordLenghts[0]
+	nextWordLengths := wordLenghts[1:]
+	for ti := 0; ti < parentWord.collapsedBoard.length; ti++ {
+		if parentWord.collapsedBoard.characters[ti] != ' ' {
+			findWordLetters(dictRoot, ti, []int{}, wordLength, []rune{}, parentWord)
+		}
+	}
+
+
+
+	for wi := 0; wi < len(parentWord.nextWords); wi++ {
+		findPhraseWords(dictRoot, nextWordLengths, parentWord.nextWords[wi], level + 1)
+	}
+
+}
+
+func findWordLetters(parentDictNode *dictionaryNode, currentTileIdx int, visitedTiles [] int, wordLength int, visitedChars [] rune, parentWord *searchResultTree) {
+
+	gameBoard := parentWord.collapsedBoard
+	currentDictNode := parentDictNode.findChildNode(parentWord.collapsedBoard.characters[currentTileIdx])
+	if currentDictNode != nil {
 		visitedTiles = append(visitedTiles, currentTileIdx)
+		visitedChars = append(visitedChars, gameBoard.characters[currentTileIdx])
 		neighborTiles := gameBoard.getNeighborTiles(currentTileIdx)
 		for _, nt := range neighborTiles  {
-			if length > 1 {
+			if wordLength > 1 {
 				if !slices.Contains(visitedTiles, nt.index) {
-					findWord(gameBoard, currentDictionaryNode, nt.index, visitedTiles, length-1)
+					findWordLetters(currentDictNode, nt.index, visitedTiles, wordLength-1, visitedChars, parentWord)
 				} 
 			} else {
-				if currentDictionaryNode.wordEnds {
-					for j := range visitedTiles {
-						fmt.Printf("%c", gameBoard.characters[visitedTiles[j]])
+				if currentDictNode.wordEnds {
+					// found a legal word. add status to search results
+					//  - create string of the word
+					//  - collapse a board
+					word := string(visitedChars)
+					collapsedBoard := gameBoard.removeWord(visitedTiles)
+					
+					thisWord := searchResultTree {
+						letters: word,
+						indices: visitedTiles,
+						collapsedBoard: collapsedBoard,
+						sourceBoard: gameBoard,
 					}
-					fmt.Println()
-					return visitedTiles
+					if parentWord.nextWords == nil {
+						parentWord.nextWords = []*searchResultTree{}
+					}
+					parentWord.nextWords = append(parentWord.nextWords, &thisWord)
+
+					// fmt.Printf("%s - %s\n", word, fmt.Sprint(visitedTiles))
+					return
 				}
 			}				
 		}
 	} 
-	return []int {}
 }
 
 
@@ -97,7 +167,6 @@ func HelloServer(w http.ResponseWriter, r *http.Request) {
 	var wordLengths = s.Split(splitRequestStr[1], ",")
 	fmt.Fprintf(w, "Word lengths are %s\n", wordLengths)
 
-	fmt.Fprintf(w, "Dict length is %d\n", len(wordDict))
 
 }
 
@@ -106,7 +175,7 @@ func Isqrt(n int) int {
 }
 
 // Builds a trie and a map for timing comparison later
-func (t *dictionary) readDictionaryFile(filename string) {
+func (t *dictionaryTrie) readDictionaryFile(filename string) {
 	file, err := os.Open(filename)
 
 	if err != nil {

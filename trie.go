@@ -7,24 +7,24 @@ type dictionaryNode struct {
 }
 
 // Search branch beginning with a specific trie node
-func (n *dictionaryNode) findNode(letter rune) *dictionaryNode {
+func (n *dictionaryNode) findChildNode(letter rune) *dictionaryNode {
     index := letter - 'a'
     return n.children[index]
 }
 
-type dictionary struct {
+type dictionaryTrie struct {
     root *dictionaryNode
 }
 
 //inititlaizing a new dictionary trie 
-func trieInit() *dictionary {
-    t := new(dictionary)
+func trieInit() *dictionaryTrie {
+    t := new(dictionaryTrie)
     t.root = new(dictionaryNode)
     return t
 }
 
 // Inserting words into trie
-func (t *dictionary) insert(word string) {
+func (t *dictionaryTrie) insert(word string) {
     current := t.root
     for _, letter := range word {
         index := letter - 'a'
@@ -41,7 +41,7 @@ func (t *dictionary) insert(word string) {
 // 1  = complete word found
 // -1 = trie branch exists, but it is an incomplete word
 // 0  = no such branch found
-func (t *dictionary) search(word string) int {
+func (t *dictionaryTrie) search(word string) int {
     node := t.root
     for _, letter := range word {
         index := letter - 'a'
