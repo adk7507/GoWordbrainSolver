@@ -1,25 +1,30 @@
 package main
 
+import (
+    "os"
+    "log"
+    "bufio"
+)
 
-type dictionaryNode struct {
-    children [26]*dictionaryNode
+type dictionaryTreeNode struct {
+    children [26]*dictionaryTreeNode
     wordEnds bool
 }
 
 // Search branch beginning with a specific trie node
-func (n *dictionaryNode) findChildNode(letter rune) *dictionaryNode {
+func (n *dictionaryTreeNode) findChildNode(letter rune) *dictionaryTreeNode {
     index := letter - 'a'
     return n.children[index]
 }
 
 type dictionaryTrie struct {
-    root *dictionaryNode
+    root *dictionaryTreeNode
 }
 
 //inititlaizing a new dictionary trie 
 func trieInit() *dictionaryTrie {
     t := new(dictionaryTrie)
-    t.root = new(dictionaryNode)
+    t.root = new(dictionaryTreeNode)
     return t
 }
 
@@ -30,7 +35,7 @@ func (t *dictionaryTrie) insert(word string) {
         index := letter - 'a'
 
         if current.children[index] == nil {
-            current.children[index] = new(dictionaryNode)
+            current.children[index] = new(dictionaryTreeNode)
         }
         current = current.children[index]
     }
@@ -55,6 +60,24 @@ func (t *dictionaryTrie) search(word string) int {
         return 1
     }
     return -1
+}
+
+// Builds a trie and a map for timing comparison later
+func (t *dictionaryTrie) readDictionaryFile(filename string) {
+	file, err := os.Open(filename)
+
+	if err != nil {
+		log.Fatalf("failed opening file: %s", err)
+	}
+
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+
+	var line string
+	for scanner.Scan() {
+		line = scanner.Text()
+		t.insert(line)
+	}
 }
 
 
