@@ -10,10 +10,10 @@ import (
 
 func main() {
 	// Board
-	chars := "zcatzzzzzzzsixzzzzzzztanz"
-	chars = "helpzlzpzzzzzzzz"
-	size := 4
-	wordLengths := []int{4, 3, 3}
+	chars := "zcatzzzzzzzsixzzzzzzzteaz"
+	// chars = "helpzlzpzzzzzzzz"
+	size := 5
+	wordLengths := []int{3}
 
 	// The dictionary
     dict := trieInit()
@@ -41,10 +41,19 @@ func main() {
 	// 	sourceBoard: b,
 	// }
 
-	foundWords := findWord2(dict.root, b, wordLengths[0], []int{}, []rune{})
-	
-	fmt.Println("main")
-	fmt.Println(foundWords)
+	//foundWords := findWord2(dict.root, b, wordLengths[0], []int{}, []rune{})
+	rtn := resultTreeNode {
+		word: "ROOT",
+		gridIndices: []int{-1,-1,-1,-1},
+		collapsedBoard: b,
+		sourceBoard: b,
+		nextWords: nil,
+	}
+	findPhrase2(0, wordLengths, &rtn, dict)
+	printSubtree(&rtn, "", 2)
+
+	fmt.Print("main: ")
+	// fmt.Println(foundWords)
 	//findPhrase(dict.root, wordLengths, &rootWord, 0)
 
 

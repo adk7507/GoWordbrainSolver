@@ -3,18 +3,14 @@ import (
 	"fmt"
 )
 
-type displayWordTree struct {
-
-}
-
 type resultTreeNode struct {
 	word string
 	gridIndices []int
 	collapsedBoard *board
 	sourceBoard *board
 	nextWords []*resultTreeNode
-	fullPhrase bool
 }
+
 
 func printSubtree(word *resultTreeNode, prev string, depth int) {
 	newStr := fmt.Sprintf("%s %s", prev, word.word)
