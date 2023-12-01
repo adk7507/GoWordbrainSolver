@@ -12,7 +12,7 @@ import (
 func main() {
 	// The dictionary
     dict := trieInit()
-	dict.readDictionaryFile("tiny_english.txt")
+	dict.readDictionaryFile("english_cleaned.txt")
 
 	// Build the game board
 	chars := "ruuasenererigusiltoubtsdm"
@@ -50,9 +50,9 @@ func main() {
 		answers[i] = k
 		i++
 	}
-	fmt.Printf("Before sort: %d\n", len(answers))
+	
 	slices.Sort(answers)
-	fmt.Printf("After sort: %d\n", len(answers))
+	
 	f, _ := os.Create("out.txt")
 
 
