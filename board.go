@@ -234,6 +234,9 @@ func findWord2(parentChar *dictionaryTreeNode, gameBoard *board, wordLength int,
 	if len(visitedChars) == 0 {
 		allFoundWords := []foundWord{}
 		for i, c := range gameBoard.characters {
+			if c == ' ' {
+				continue
+			} 
 			nvt := make([]int, len(visitedTiles)+1)
 			nvc := make([] rune, len(visitedChars)+1)
 			copy(nvt, append(visitedTiles, i))

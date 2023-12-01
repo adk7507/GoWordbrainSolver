@@ -1,13 +1,7 @@
-a
-aa
-aaa
 aachen
 aardvark
 aardvarks
 aaron
-ab
-aba
-ababa
 abaci
 aback
 abactor
@@ -92,8 +86,6 @@ abeam
 abearances
 abecedarian
 abecedarians
-abed
-abel
 aberaeron
 aberavon
 aberdare
@@ -1587,7 +1579,6 @@ agnostic
 agnosticism
 agnostics
 ago
-agog
 agonies
 agonise
 agonised
@@ -1775,7 +1766,6 @@ alas
 alaska
 alaskan
 alaskans
-alb
 albacore
 albania
 albanian
@@ -2754,7 +2744,6 @@ anemometer
 anemometers
 anemone
 anemones
-anent
 aneroid
 anesthesia
 anesthesiologist
@@ -3856,7 +3845,6 @@ argumentation
 argumentative
 argumentatively
 arguments
-argus
 argyle
 argyles
 argyll
@@ -5097,11 +5085,6 @@ aztec
 azure
 azurite
 azurites
-b
-ba
-baa
-baba
-babas
 babble
 babbled
 babbler
@@ -5632,7 +5615,6 @@ bannisters
 bannock
 bannockburn
 bannocks
-banns
 banque
 banques
 banquet
@@ -7402,7 +7384,6 @@ biyearly
 biz
 bizarre
 bizet
-blab
 blabbed
 blabber
 blabbered
@@ -7691,7 +7672,6 @@ blithered
 blithering
 blithers
 blithest
-blitt
 blitz
 blitzed
 blitzes
@@ -7991,7 +7971,6 @@ bobsleds
 bobtail
 bobtailed
 bobtails
-bod
 bode
 boded
 bodes
@@ -8065,8 +8044,6 @@ boise
 boisterous
 boisterously
 boisterousness
-bola
-bolas
 bold
 bolded
 bolder
@@ -8082,7 +8059,6 @@ boletuses
 bolivia
 bolivian
 bolivians
-boll
 bollard
 bollards
 bollix
@@ -8206,12 +8182,8 @@ bony
 bonze
 bonzes
 boo
-boob
-boobies
 booboo
 booboos
-boobs
-booby
 boodle
 boodles
 booed
@@ -9298,10 +9270,6 @@ bryan
 bryant
 bryophyte
 bryophytes
-bsc
-bst
-bt
-btu
 bubble
 bubbled
 bubbles
@@ -9596,9 +9564,6 @@ buoyant
 buoyed
 buoying
 buoys
-bur
-burberry
-burberrys
 burble
 burbled
 burbles
@@ -9928,8 +9893,6 @@ byword
 bywords
 byzantine
 byzantium
-c
-ca
 cab
 cabal
 cabala
@@ -18004,7 +17967,6 @@ czechoslovakian
 czechoslovakians
 czechoslovaks
 czechs
-d
 dab
 dabbed
 dabbing
@@ -18369,12 +18331,6 @@ dazzlers
 dazzles
 dazzling
 dazzlingly
-dbe
-dbes
-dcvos
-ddss
-ddt
-de
 deacon
 deaconess
 deaconesses
@@ -22318,15 +22274,10 @@ dizzying
 dizzyingly
 djakarta
 djibouti
-dl
-dmus
-dna
 do
 doable
-dob
 doberman
 dobermans
-doc
 docent
 docents
 docile
@@ -22540,11 +22491,6 @@ dominique
 domino
 dominoes
 dominus
-domus
-don
-donald
-donaldson
-donatarius
 donate
 donated
 donates
@@ -23340,8 +23286,6 @@ duluth
 dulverton
 dulwich
 duly
-dum
-dumas
 dumb
 dumbarton
 dumbbell
@@ -23584,7 +23528,6 @@ dysphasia
 dysprosium
 dystrophic
 dystrophy
-e
 each
 eadem
 eager
@@ -24294,10 +24237,6 @@ elevenths
 elf
 elfin
 elfish
-elgar
-elgin
-eli
-elias
 elicit
 elicitation
 elicited
@@ -25426,9 +25365,6 @@ enunciating
 enunciation
 enunciator
 enunciators
-enure
-enured
-enures
 enuresis
 enuring
 envelop
@@ -25734,8 +25670,6 @@ ergo
 ergonomic
 ergonomically
 ergonomics
-ergot
-ergots
 ergs
 eric
 erica
@@ -27192,8 +27126,6 @@ eyrie
 eyries
 ezekiel
 ezra
-f
-fa
 faber
 faberge
 fabian
@@ -27309,14 +27241,6 @@ faecal
 faeces
 faeroe
 faeroes
-fag
-fagged
-fagging
-faggot
-faggots
-fagot
-fagots
-fags
 fahrenheit
 faience
 fail
@@ -28672,7 +28596,6 @@ fizzling
 fizzy
 fjord
 fjords
-flab
 flabbergast
 flabbergasted
 flabbergasting
@@ -29275,7 +29198,6 @@ flyweight
 flyweights
 flywheel
 flywheels
-fo
 foal
 foaled
 foaling
@@ -29288,10 +29210,6 @@ foaminess
 foaming
 foams
 foamy
-fob
-fobbed
-fobbing
-fobs
 focal
 focally
 foci
@@ -30742,7 +30660,6 @@ fuzziness
 fuzzy
 fy
 fylingdale
-g
 gab
 gabardine
 gabardines
@@ -30794,8 +30711,6 @@ gaffes
 gaffing
 gaffs
 gafol
-gag
-gaga
 gage
 gager
 gagers
@@ -30995,7 +30910,6 @@ gantlets
 gantlope
 gantries
 gantry
-gaol
 gaolbird
 gaoled
 gaoler
@@ -32140,7 +32054,6 @@ goathland
 goats
 goatskin
 goatskins
-gob
 gobble
 gobbled
 gobbledegook
@@ -32155,7 +32068,6 @@ goblets
 goblin
 goblins
 gobs
-god
 godalming
 godchild
 godchildren
@@ -32201,9 +32113,6 @@ goggle
 goggled
 goggles
 goggling
-gogh
-gogo
-gogol
 going
 goings
 goiter
@@ -32288,8 +32197,6 @@ googolplexes
 googols
 gooier
 gooiest
-gook
-gooks
 goole
 goon
 gooney
@@ -32368,8 +32275,6 @@ gourock
 gout
 gouts
 gouty
-gov
-govan
 govern
 governable
 governance
@@ -36423,21 +36328,13 @@ hysterotomy
 hythe
 hyundai
 i
-iain
-iamb
 iambic
 iambs
-ian
-iata
-iba
 iberia
 iberian
 iberians
 ibex
 ibexes
-ibi
-ibid
-ibidem
 ibis
 ibises
 ibiza
@@ -36783,7 +36680,6 @@ imbue
 imbued
 imbues
 imbuing
-imf
 imidic
 imitable
 imitate
@@ -39421,8 +39317,6 @@ inundated
 inundates
 inundating
 inundation
-inure
-inured
 inurement
 inurements
 inures
@@ -39640,7 +39534,6 @@ ire
 ireful
 irefully
 ireland
-irene
 iridescence
 iridescent
 iridescently
@@ -39932,7 +39825,6 @@ itineraries
 itinerary
 its
 itself
-iv
 ivan
 ivanhoe
 ives
@@ -39942,9 +39834,7 @@ ivories
 ivory
 ivy
 ivybridge
-ix
 izvestia
-j
 jab
 jabbed
 jabber
@@ -40751,10 +40641,6 @@ juxtaposes
 juxtaposing
 juxtaposition
 juxtapositions
-k
-ka
-kabob
-kabobs
 kabuki
 kabul
 kafka
@@ -41372,7 +41258,6 @@ koestler
 kohl
 kohlrabi
 kohlrabis
-kola
 kolas
 kong
 kook
@@ -41448,8 +41333,6 @@ kymographs
 kyoto
 kyth
 kyushu
-l
-la
 lab
 label
 labeled
@@ -42246,9 +42129,6 @@ leered
 leering
 leers
 leery
-lees
-leet
-leets
 leeward
 leeway
 left
@@ -42443,8 +42323,6 @@ lent
 lenten
 lentil
 lentils
-lento
-lentos
 leo
 leominster
 leon
@@ -42610,7 +42488,6 @@ liana
 lianas
 liar
 liars
-lib
 libation
 libations
 libber
@@ -43201,13 +43078,9 @@ llanrhystyd
 llanrwst
 llanstephan
 llanwrtyd
-llb
-lld
 lleyn
 lloyd
 lloyds
-lm
-lo
 load
 loaded
 loader
@@ -43259,7 +43132,6 @@ lobelias
 lobes
 loblollies
 loblolly
-lobo
 lobos
 lobotomies
 lobotomise
@@ -43426,7 +43298,6 @@ loiterer
 loiterers
 loitering
 loiters
-loll
 lollapalooza
 lolled
 lollies
@@ -43970,12 +43841,9 @@ lysergic
 lysine
 lysol
 lytham
-m
-ma
 maastricht
 mabel
 mablethorpe
-mac
 macabre
 macadam
 macadamia
@@ -48024,8 +47892,6 @@ mottling
 motto
 mottoes
 mottos
-moue
-moues
 mould
 mouldable
 moulded
@@ -48614,14 +48480,9 @@ mythologists
 mythology
 mythomaniac
 myths
-n
-naafi
 nab
 nabbed
 nabbing
-nabisco
-nabob
-nabobs
 nabokov
 nabs
 nacelle
@@ -49377,8 +49238,6 @@ niftier
 niftiest
 niftiness
 nifty
-nigel
-niger
 nigeria
 nigerian
 nigerians
@@ -50022,7 +49881,6 @@ nuns
 nuptial
 nuptials
 nuptias
-nur
 nuremberg
 nuremburg
 nurse
@@ -50081,22 +49939,9 @@ nuzzle
 nuzzled
 nuzzles
 nuzzling
-nw
 nyasaland
 nylon
 nylons
-nymph
-nymphet
-nymphets
-nymphomania
-nymphomaniac
-nymphomaniacs
-nymphs
-o
-oaf
-oafish
-oafs
-oahu
 oak
 oaken
 oakham
@@ -50651,8 +50496,6 @@ okinawa
 oklahoma
 okra
 okras
-oks
-olaf
 old
 olden
 older
@@ -52309,11 +52152,8 @@ oyster
 oystercatcher
 oystercatchers
 oysters
-oz
 ozone
 ozonosphere
-p
-pa
 pablo
 pabulum
 pacare
@@ -59307,8 +59147,6 @@ quotidian
 quotient
 quotients
 quoting
-r
-ra
 rabat
 rabbet
 rabbets
@@ -61427,7 +61265,6 @@ reiterating
 reiteration
 reiterations
 reiterative
-reits
 reject
 rejected
 rejecter
@@ -66229,9 +66066,6 @@ sentinel
 sentinels
 sentries
 sentry
-seoul
-sepal
-sepals
 separable
 separate
 separated
@@ -68732,8 +68566,6 @@ snobbishness
 snobbism
 snobby
 snobs
-snood
-snoods
 snook
 snooker
 snookered
@@ -71206,9 +71038,6 @@ stornaway
 story
 storyteller
 storytellers
-stoup
-stoups
-stour
 stourbridge
 stout
 stoutly
@@ -73319,8 +73148,6 @@ systole
 systoles
 systolic
 szechwan
-t
-ta
 tab
 tabard
 tabards
@@ -75396,11 +75223,9 @@ tittle
 tittles
 titular
 titulus
-titus
 tiverton
 tizzies
 tizzy
-tnt
 to
 toad
 toadfish
@@ -75563,7 +75388,6 @@ tonalities
 tonality
 tonally
 tonbridge
-tondo
 tondos
 tone
 toned
@@ -77522,18 +77346,13 @@ tythes
 tything
 tzar
 tzars
-u
 uberrima
 ubi
 ubiquitous
 ubiquitously
 ubiquity
-uc
 udder
 udders
-uefa
-ufo
-ufos
 uganda
 ugandan
 ugandans
@@ -80091,8 +79910,6 @@ ursuline
 uruguay
 uruguayan
 uruguayans
-us
-usa
 usability
 usable
 usage
@@ -80145,7 +79962,6 @@ uterogestation
 uterus
 uteruses
 utica
-utile
 utilisation
 utilise
 utilised
@@ -80194,8 +80010,6 @@ uxoriously
 uzbek
 uzbekistan
 uzbeks
-v
-vac
 vacancies
 vacancy
 vacant
@@ -81507,7 +81321,6 @@ vowel
 vowels
 vowing
 vows
-vox
 voyage
 voyaged
 voyager
@@ -81566,7 +81379,6 @@ vultures
 vulva
 vulvas
 vying
-w
 wabble
 wackier
 wackiest
@@ -83081,9 +82893,6 @@ wizen
 wizened
 wizening
 wizens
-wnw
-wo
-woad
 wobble
 wobbled
 wobbles
@@ -83530,7 +83339,6 @@ wynn
 wyoming
 wysiwyg
 wyvern
-x
 xebec
 xebecs
 xenodochium
@@ -83577,7 +83385,6 @@ xylophone
 xylophones
 xylophonist
 xylophonists
-y
 yacht
 yachted
 yachter
@@ -83809,7 +83616,6 @@ yuppies
 yvette
 yvonne
 ywca
-z
 zabaglione
 zabagliones
 zachary

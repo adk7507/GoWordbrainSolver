@@ -6,20 +6,19 @@ import (
 	"os"
 	"sort"
 	s "strings"
+	"slices"
 )
 
 func main() {
-	// Board
-	chars := "zcatzzzzzzzsixzzzzzzzteaz"
-	// chars = "helpzlzpzzzzzzzz"
-	size := 5
-	wordLengths := []int{3}
-
 	// The dictionary
     dict := trieInit()
-	dict.readDictionaryFile("english_cleaned.txt")
+	dict.readDictionaryFile("tiny_english.txt")
 
 	// Build the game board
+	chars := "ruuasenererigusiltoubtsdm"
+	size := 5
+	wordLengths := []int{5,5,3,7,5}
+
 	b := buildBoard(chars, size)
 	if( b == nil) {
 		fmt.Fprintf(os.Stderr, "buildBoard returned nil\nInput 1: %s\nInput 2: %d\n", chars, size)
@@ -33,39 +32,35 @@ func main() {
 
 	b.printBoard("Game Board: ")
 
-	// // Begin word search
-	// rootWord := resultTreeNode {
-	// 	word: "",
-	// 	gridIndices: []int{-1,-1,-1,-1},
-	// 	collapsedBoard: b,
-	// 	sourceBoard: b,
-	// }
-
-	//foundWords := findWord2(dict.root, b, wordLengths[0], []int{}, []rune{})
 	rtn := resultTreeNode {
-		word: "ROOT",
-		gridIndices: []int{-1,-1,-1,-1},
+		word: "",
+		gridIndices: []int{},
 		collapsedBoard: b,
 		sourceBoard: b,
 		nextWords: nil,
 	}
 	findPhrase2(0, wordLengths, &rtn, dict)
-	printSubtree(&rtn, "", 2)
+	// printSubtree(&rtn, "",len(wordLengths))
 
-	fmt.Print("main: ")
-	// fmt.Println(foundWords)
-	//findPhrase(dict.root, wordLengths, &rootWord, 0)
+	flattened := make(map[string]int,0)
+	collapseSubtree(&rtn, "", len(wordLengths), &flattened)
+	answers := make([]string, len(flattened))
+	i := 0
+	for k,_ := range flattened {
+		answers[i] = k
+		i++
+	}
+	fmt.Printf("Before sort: %d\n", len(answers))
+	slices.Sort(answers)
+	fmt.Printf("After sort: %d\n", len(answers))
+	f, _ := os.Create("out.txt")
 
 
-	// Print results - move to HTML
-	// fmt.Println("Collapsing")
-	// flattened := make(map[string]int)
-	// collapseSubtree(&rootWord, "", 3, &flattened)
-
-	// fmt.Println(flattened)
-
-	// http.HandleFunc("/", HelloServer)
-	// http.ListenAndServe(":8080", nil)
+	for _,a := range answers {
+		fmt.Println(a)
+		f.WriteString(fmt.Sprintf("%s\n", a))
+	}
+	f.Close()
 }
 
 

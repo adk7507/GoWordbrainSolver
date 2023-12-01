@@ -24,7 +24,7 @@ func printSubtree(word *resultTreeNode, prev string, depth int) {
 }
 
 func collapseSubtree(word *resultTreeNode, prev string, depth int, flattened *map[string]int) {
-	newStr :=  word.word
+	newStr := fmt.Sprintf("%s - %s", prev, word.word)
 	if depth == 0 {
 		//fmt.Printf("%d %s\n", depth, newStr)
 		(*flattened)[newStr] = depth
