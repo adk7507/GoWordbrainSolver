@@ -1,0 +1,20 @@
+
+{{ define "resultTree" }}
+    
+        {{ if gt (len .Things) 0}}
+            <li><span class="caret">{{ .Text }}</span>
+                <ul  class="nested">
+                    {{ range .Things }}
+                    {{ template "resultTree" . }}
+                    {{ end }}
+                </ul>
+            </li>
+        {{else}}
+            <li><span class="listicle">{{ .Text }}</span></li>
+        {{ end }}
+
+{{ end }}
+
+{{ range . }}
+<ul id="myUL">{{ template "resultTree" . }}</ul>
+{{ end }}

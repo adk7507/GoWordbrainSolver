@@ -120,72 +120,10 @@ func (b *board) printBoard(name string) {
 	}
 }
 
-
-func findPhrase(dictRoot *dictionaryTreeNode, wordLenghts []int, parentWord *resultTreeNode, level int) {
-
-	if len(wordLenghts) == 0 {
-		return
-	}
-
-	wordLength := wordLenghts[0]
-	nextWordLengths := wordLenghts[1:]
-	for ti := 0; ti < parentWord.collapsedBoard.length; ti++ {
-		if parentWord.collapsedBoard.characters[ti] != ' ' {
-			findWord(dictRoot, ti, []int{}, wordLength, []rune{}, parentWord)
-		}
-	}
-
-	for wi := 0; wi < len(parentWord.nextWords); wi++ {
-		findPhrase(dictRoot, nextWordLengths, parentWord.nextWords[wi], level + 1)
-	}
-
-}
-
-func findWord(parentDictNode *dictionaryTreeNode, currentTileIdx int, visitedTiles [] int, wordLength int, visitedChars [] rune, parentWord *resultTreeNode) {
+func findPhrase( wordIndex int, wordLengths []int, parentWord *resultTreeNode, dictionary *dictionaryTrie) {
 
 	gameBoard := parentWord.collapsedBoard
-	currentDictNode := parentDictNode.findChildNode(parentWord.collapsedBoard.characters[currentTileIdx])
-	if currentDictNode != nil {
-		visitedTiles = append(visitedTiles, currentTileIdx)
-		visitedChars = append(visitedChars, gameBoard.characters[currentTileIdx])
-		neighborTiles := gameBoard.getNeighborTiles(currentTileIdx)
-		for _, nt := range neighborTiles  {
-			if wordLength > 1 {
-				if !slices.Contains(visitedTiles, nt.index) {
-					findWord(currentDictNode, nt.index, visitedTiles, wordLength-1, visitedChars, parentWord)
-				} 
-			} else {
-				if currentDictNode.wordEnds {
-					// found a legal word. add status to search results
-					//  - create string of the word
-					//  - collapse a board
-					word := string(visitedChars)
-					collapsedBoard := gameBoard.removeWord(visitedTiles)
-					
-					thisWord := resultTreeNode {
-						word: word,
-						gridIndices: visitedTiles,
-						collapsedBoard: collapsedBoard,
-						sourceBoard: gameBoard,
-					}
-					if parentWord.nextWords == nil {
-						parentWord.nextWords = []*resultTreeNode{}
-					}
-					parentWord.nextWords = append(parentWord.nextWords, &thisWord)
-
-					// fmt.Printf("%s - %s\n", word, fmt.Sprint(visitedTiles))
-					return
-				}
-			}				
-		}
-	} 
-}
-
-
-func findPhrase2( wordIndex int, wordLengths []int, parentWord *resultTreeNode, dictionary *dictionaryTrie) {
-
-	gameBoard := parentWord.collapsedBoard
-	foundWords := findWord2(dictionary.root, gameBoard, wordLengths[wordIndex], []int{}, []rune{})
+	foundWords := findWord(dictionary.root, gameBoard, wordLengths[wordIndex], []int{}, []rune{})
 
 	if len(foundWords) > 0 {
 		parentWord.nextWords = []*resultTreeNode{}
@@ -201,7 +139,7 @@ func findPhrase2( wordIndex int, wordLengths []int, parentWord *resultTreeNode, 
 			if wordIndex == len(wordLengths) -1 {
 				parentWord.nextWords = append(parentWord.nextWords, &rtn)
 			} else {
-				findPhrase2(wordIndex + 1, wordLengths, &rtn, dictionary)
+				findPhrase(wordIndex + 1, wordLengths, &rtn, dictionary)
 				if rtn.nextWords != nil && len(rtn.nextWords) > 0 {
 					parentWord.nextWords = append(parentWord.nextWords, &rtn)
 				}
@@ -229,7 +167,7 @@ type foundWord struct {
 	collapsedBoard *board
 }
 
-func findWord2(parentChar *dictionaryTreeNode, gameBoard *board, wordLength int, visitedTiles []int, visitedChars []rune) ([]foundWord) {
+func findWord(parentChar *dictionaryTreeNode, gameBoard *board, wordLength int, visitedTiles []int, visitedChars []rune) ([]foundWord) {
 
 	if len(visitedChars) == 0 {
 		allFoundWords := []foundWord{}
@@ -241,7 +179,7 @@ func findWord2(parentChar *dictionaryTreeNode, gameBoard *board, wordLength int,
 			nvc := make([] rune, len(visitedChars)+1)
 			copy(nvt, append(visitedTiles, i))
 			copy(nvc, append(visitedChars, c))
-			foundWords := findWord2(parentChar.findChildNode(c), gameBoard, wordLength, nvt, nvc)
+			foundWords := findWord(parentChar.findChildNode(c), gameBoard, wordLength, nvt, nvc)
 			if len(foundWords) > 0 {
 				allFoundWords = append(allFoundWords, foundWords...)
 			}
@@ -267,7 +205,7 @@ func findWord2(parentChar *dictionaryTreeNode, gameBoard *board, wordLength int,
 					nvc := make([] rune, len(visitedChars)+1)
 					copy(nvt, append(visitedTiles, nt.index))
 					copy(nvc, append(visitedChars, nt.char))
-					foundWords := findWord2(nextDTN, gameBoard, wordLength, nvt, nvc)
+					foundWords := findWord(nextDTN, gameBoard, wordLength, nvt, nvc)
 					allFoundWords = append(allFoundWords, foundWords...)	
 				}
 			}

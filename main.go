@@ -2,18 +2,122 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 	"os"
-	"sort"
-	s "strings"
 	"slices"
+	"time"
+	"context"
+	"github.com/google/uuid"
 )
 
-func main() {
-	// The dictionary
-    dict := trieInit()
-	dict.readDictionaryFile("english_cleaned.txt")
+var page *template.Template
+var dict *dictionaryTrie
 
+func init() {
+	page, _ = template.ParseGlob("pages/*.html")
+
+	// Load the english dictionary
+	dict = trieInit()
+	dict.readDictionaryFile("english_cleaned.txt")
+}
+
+var dataChannels map[string](chan string)
+
+func main() {
+
+	dataChannels = make(map[string](chan string))
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		uuidString := uuid.New().String()
+		cookie := http.Cookie{ Name: "wbClient", Value: uuidString}
+		dataChannels[uuidString] = make(chan string)
+
+		http.SetCookie(w, &cookie)
+		
+		fmt.Printf("index: %s\n",uuidString)
+        http.ServeFile(w, r, "pages/index.html")
+    })
+
+	http.HandleFunc("/solve", solvePuzzle)
+
+    http.HandleFunc("/result", func(w http.ResponseWriter, r *http.Request) {
+		cookie, _ := r.Cookie("wbClient")
+		uuidString := cookie.Value
+		fmt.Printf("start result: %s\n",uuidString)
+
+        // Set headers for SSE
+        w.Header().Set("Content-Type", "text/event-stream")
+        w.Header().Set("Cache-Control", "no-cache")
+        w.Header().Set("Connection", "keep-alive")
+
+        // Create a channel to send data
+        // dataCh := make(chan string)
+
+        // Create a context for handling client disconnection
+        _, cancel := context.WithCancel(r.Context())
+        defer cancel()
+
+        // Send data to the client
+		
+		var dataChan chan string
+		dataChan = dataChannels[uuidString]
+        // go func() {
+		// data := <-dataChan
+		for data := range dataChan {
+			fmt.Printf("data: %s\n\n", data)                
+			fmt.Fprintf(w, "data: %s\n\n", data)
+			w.(http.Flusher).Flush()
+
+			// data = <-dataChan
+			// fmt.Printf("data: %s\n\n", data)                
+			// fmt.Fprintf(w, "data: %s\n\n", data)
+			// w.(http.Flusher).Flush()
+		}
+        // }()
+
+		// Simulate sending data periodically
+		// for {
+		// 	time.Sleep(1 * time.Second)
+		// 	dataChan <- time.Now().Format(time.TimeOnly)
+			
+		// }
+		fmt.Printf("end result: %s\n",uuidString)
+
+
+    })
+
+	http.ListenAndServe(":80", nil)
+}
+
+
+type Thing struct {
+	Text   string
+	Things []Thing
+}
+
+func solvePuzzle(w http.ResponseWriter, r *http.Request) {
+	cookie, _ := r.Cookie("wbClient")
+	uuidString := cookie.Value
+	fmt.Printf("start solve: %s\n",uuidString)
+
+	
+	go func() {
+		dataChannels[uuidString] <- "Solving"
+		time.Sleep(1 * time.Second)
+		dataChannels[uuidString] <- "Solution"
+	}()
+
+	terr := page.ExecuteTemplate(w, "resultsView.html",nil)
+	if terr != nil {
+		http.Error(w, terr.Error(), http.StatusInternalServerError)
+	}
+
+	fmt.Printf("end solve: %s\n",uuidString)
+
+}
+
+func oldTestMain() {
 	// Build the game board
 	chars := "ruuasenererigusiltoubtsdm"
 	size := 5
@@ -39,7 +143,7 @@ func main() {
 		sourceBoard: b,
 		nextWords: nil,
 	}
-	findPhrase2(0, wordLengths, &rtn, dict)
+	findPhrase(0, wordLengths, &rtn, dict)
 	// printSubtree(&rtn, "",len(wordLengths))
 
 	flattened := make(map[string]int,0)
@@ -62,36 +166,3 @@ func main() {
 	}
 	f.Close()
 }
-
-
-func HelloServer(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %s!\n", r.URL.Path[1:])
-	var splitRequestStr = s.Split(s.ToLower(r.URL.Path[1:]), ":")
-	fmt.Fprintln(w, len(splitRequestStr))
-
-	var characterGrid = splitRequestStr[0]
-	var gridSize = Isqrt(len(characterGrid))
-	fmt.Fprintf(w, "Grid is %dx%d\n", gridSize, gridSize)
-
-	for i := 0; i < gridSize*gridSize; i++ {
-		if i % gridSize == 0 {
-			fmt.Fprintln(w)
-		}
-		fmt.Fprintf(w, "%c", characterGrid[i])
-
-	}
-
-	fmt.Fprintln(w)
-
-	var wordLengths = s.Split(splitRequestStr[1], ",")
-	fmt.Fprintf(w, "Word lengths are %s\n", wordLengths)
-
-
-}
-
-func Isqrt(n int) int {
-	return sort.Search(n, func(x int) bool { return x*x+2*x+1 > n })
-}
-
-
-

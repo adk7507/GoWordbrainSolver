@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+	
+<html>
+<head>
+    <script src="https://unpkg.com/htmx.org@1.8.0"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
+    <!-- <link rel="stylesheet" href="https://the.missing.style"/> -->
+    <title>Wordbrain Solver</title>
+
+    <style>
+        ul, #myUL {
+          list-style-type: none;
+        }
+        
+        #myUL {
+          margin: 0;
+          padding: 0;
+        }
+        
+        .caret {
+          cursor: pointer;
+          -webkit-user-select: none; /* Safari 3.1+ */
+          -moz-user-select: none; /* Firefox 2+ */
+          -ms-user-select: none; /* IE 10+ */
+          user-select: none;
+        }
+        
+        .listicle::before {
+          content: "\25C9";
+          color: black;
+          display: inline-block;
+          margin-right: 6px;
+        }
+
+        .caret::before {
+          content: "\25B6";
+          color: black;
+          display: inline-block;
+          margin-right: 6px;
+        }
+        
+        .caret-down::before {
+          -ms-transform: rotate(90deg); /* IE 9 */
+          -webkit-transform: rotate(90deg); /* Safari */
+          transform: rotate(90deg);  
+        }
+        
+        .nested {
+          display: none;
+        }
+        
+        .active {
+          display: block;
+        }
+    </style>
+
+
+</head>
+<body>
+  <h1>Puzzle Entry:</h1>
+    
+  <form id="wordbrain">
+    <label for="chargrid">Enter The Character Grid:</label><br>
+    <textarea id="chargrid" name="chargrid" cols="30" rows="15" placeholder="test&#10;char&#10;bill&#10;fold"></textarea><br>
+    <label for="wordlens">Enter word lengths:</label><br>
+    <input id="wordlens" name="wordlens" size="30" placeholder="5, 4, 7">
+    <div id="swapped-div">
+      <button hx-post="/solve" hx-target="#swapped-div" hx-swap="innerHTML">
+        Solve
+      </button>
+    </div>
+  </form>
+</body>
+</html>
