@@ -217,4 +217,3 @@ func findWord(parentChar *dictionaryTreeNode, gameBoard *board, wordLength int, 
 	return []foundWord{}
 }
 
-
