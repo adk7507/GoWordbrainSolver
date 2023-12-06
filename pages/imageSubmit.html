@@ -1,0 +1,17 @@
+<!-- FILEPATH: /c:/Projects/SW/WordbrainSolver/V2_Go/pages/imageSubmit.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Submission</title>
+    <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
+</head>
+<body>
+    <h1>Image Submission</h1>
+    <form hx-post="/solveImage" hx-encoding="multipart/form-data" hx-target="#result">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+</body>
+</html>

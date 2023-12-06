@@ -9,6 +9,7 @@ import (
 	"time"
 	"context"
 	"github.com/google/uuid"
+	// "strings"
 )
 
 var page *template.Template
@@ -40,6 +41,18 @@ func main() {
     })
 
 	http.HandleFunc("/solve", solvePuzzle)
+
+	fs := http.FileServer(http.Dir("static/"))
+	http.Handle("/static/", http.StripPrefix("/static", fs))
+	// http.HandleFunc("/static/", func(wr http.ResponseWriter,req *http.Request) {
+	// 	// Determine mime type based on the URL
+	// 	if strings.HasSuffix(req.URL.Path, ".css") {
+	// 		wr.Header().Set("Content-Type","text/css")
+	// 	} else if strings.HasSuffix(req.URL.Path, ".js") {
+	// 		wr.Header().Set("Content-Type","application/javascript")
+	// 	} 
+	// 	http.StripPrefix("/static/", fs).ServeHTTP(wr,req)
+	// })
 
     http.HandleFunc("/result", func(w http.ResponseWriter, r *http.Request) {
 		cookie, _ := r.Cookie("wbClient")
@@ -103,9 +116,9 @@ func solvePuzzle(w http.ResponseWriter, r *http.Request) {
 
 	
 	go func() {
-		dataChannels[uuidString] <- "Solving"
+		dataChannels[uuidString] <- "Solving..."
 		time.Sleep(1 * time.Second)
-		dataChannels[uuidString] <- "Solution"
+		dataChannels[uuidString] <- "Solution!"
 	}()
 
 	terr := page.ExecuteTemplate(w, "resultsView.html",nil)
