@@ -9,7 +9,9 @@ import (
 	"time"
 	"context"
 	"github.com/google/uuid"
-	// "strings"
+	"strings"
+	"regexp"
+	"strconv"
 )
 
 var page *template.Template
@@ -109,13 +111,65 @@ type Thing struct {
 	Things []Thing
 }
 
+func buildGameBoard(wlInput []string, gbInput []string) (*board, []int) {
+
+	fmt.Println("in buildGameBoard")
+	if len(wlInput) == 0 || len(gbInput) == 0 {
+		return nil,nil
+	}
+
+	gbLowercase := strings.ToLower(gbInput[0])
+	gbLowercase = regexp.MustCompile("[^a-z\n]").ReplaceAllString(gbLowercase, "")
+	
+	wlStrings := strings.Split(strings.ReplaceAll(wlInput[0], " ", ""), ",")
+	wlInts := make([]int, len(wlStrings))
+
+	var err error
+	wlSum := 0
+	for i, wl := range wlStrings {
+		wlInts[i], err = strconv.Atoi(wl)
+		wlSum += wlInts[i]
+		if err != nil {
+			return nil,nil
+		}
+	}
+
+	gbRows := strings.Split(gbLowercase, "\n")
+	var gbCleanRows []string
+	for _, gbRow := range gbRows {
+		if gbRow != "" {
+			gbCleanRows = append(gbCleanRows, gbRow)
+		}
+	}
+	gbHeight := len(gbCleanRows)
+	if gbHeight * gbHeight != wlSum {
+		return nil,nil
+	}
+
+	for _, gbRow := range gbCleanRows {
+		if len(gbRow) != gbHeight {
+			return nil,nil
+		}
+	}
+
+	return buildBoard(strings.Join(gbCleanRows,""), gbHeight), wlInts
+}
+
 func solvePuzzle(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := r.Cookie("wbClient")
 	uuidString := cookie.Value
-	fmt.Printf("start solve: %s\n",uuidString)
-
+	fmt.Printf("start solve: %s\n",uuidString)	
 	
+	r.ParseForm()
+	gb, wl := buildGameBoard(r.Form["word-lengths"], r.Form["game-board"])
+	if( gb == nil) {
+		fmt.Println("Invalid input")
+	}
+	gb.printBoard("Game Board: ")
+	fmt.Println(wl)
+
 	go func() {
+
 		dataChannels[uuidString] <- "Solving..."
 		time.Sleep(1 * time.Second)
 		dataChannels[uuidString] <- "Solution!"
