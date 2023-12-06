@@ -2,6 +2,7 @@ package main
 
 import(
 	"testing"
+  "github.com/stretchr/testify/assert"
 )
     // Returns a board and a list of integers when given valid inputs.
 func test_valid_inputs(t *testing.T) {
@@ -11,7 +12,7 @@ func test_valid_inputs(t *testing.T) {
     size:       4,
     length:     16,
     characters: []rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'},
-    neighbors: []neighborIdxList{
+    neighbors: [][]int{
       {1, 4, 5},
       {0, 2, 4, 5, 6},
       {1, 3, 5, 6, 7},
@@ -46,7 +47,7 @@ func test_uppercase_characters(t *testing.T) {
     size:       4,
     length:     16,
     characters: []rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'},
-    neighbors: []neighborIdxList{
+    neighbors: [][]int{
       {1, 4, 5},
       {0, 2, 4, 5, 6},
       {1, 3, 5, 6, 7},

@@ -7,11 +7,7 @@ type board struct {
 	size int
 	length int
 	characters []rune
-	neighbors []neighborIdxList
-}
-
-type neighborIdxList struct {
-	indices []int
+	neighbors [][]int
 }
 
 type neighborTile struct {
@@ -36,11 +32,11 @@ func buildBoard(chars string, size int) *board {
 			neighborRows := []int{r, r-1, r-1, r-1, r, r+1, r+1, r+1}
 			neighborCols := []int{c+1, c+1, c, c-1, c-1, c-1, c, c+1}
 
-			var currentNeighbors neighborIdxList
+			var currentNeighbors []int
 
 			for ci := range neighborCols {
 				if neighborCols[ci] >= 0 && neighborCols[ci] < b.size && neighborRows[ci] >= 0 && neighborRows[ci] < b.size {
-					currentNeighbors.indices = append(currentNeighbors.indices, neighborRows[ci] * b.size + neighborCols[ci])
+					currentNeighbors = append(currentNeighbors, neighborRows[ci] * b.size + neighborCols[ci])
 				}
 			}
 
@@ -57,7 +53,7 @@ func (b *board) getNeighborTiles(idx int) []neighborTile {
 
 	
 	if b.characters[idx] != ' ' {
-		for _, ni := range b.neighbors[idx].indices {
+		for _, ni := range b.neighbors[idx] {
 			if b.characters[ni] != ' ' {
 				var np neighborTile
 				np.char = b.characters[ni]
@@ -143,22 +139,9 @@ func findPhrase( wordIndex int, wordLengths []int, parentWord *resultTreeNode, d
 				if rtn.nextWords != nil && len(rtn.nextWords) > 0 {
 					parentWord.nextWords = append(parentWord.nextWords, &rtn)
 				}
-			}
-			
+			}			
 		}
-
 	}
-
-// 	// get collapsed board from parent
-// 	// find all words of spec len
-// 	// generate NODE for each found word
-// 	// if this is the last word
-// 		// attach nodes to the parent
-// 	// if this is not the last word
-// 		// find next words for each found NODE
-// 		// if next words are present in these NODEs
-// 			// attach NODEs to the parent
-
 }
 
 type foundWord struct {
