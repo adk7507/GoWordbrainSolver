@@ -1,7 +1,9 @@
 package main
+
 import(
 	"fmt"
 	"slices"
+	"sort"
 )
 type board struct {
 	size int
@@ -21,9 +23,7 @@ func buildBoard(chars string, size int) *board {
 		b := new(board)
 		b.size = size
 		b.length = len(chars)
-		fmt.Println(chars)
 		b.characters = []rune(chars)
-		fmt.Println(b.characters)
 		// connect neighbors
 		for i := range chars {
 			r := i / size
@@ -40,6 +40,7 @@ func buildBoard(chars string, size int) *board {
 				}
 			}
 
+			sort.Ints(currentNeighbors)
 			b.neighbors = append(b.neighbors, currentNeighbors)
 		}
 		return b

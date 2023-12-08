@@ -5,8 +5,8 @@ import(
   "github.com/stretchr/testify/assert"
 )
     // Returns a board and a list of integers when given valid inputs.
-func test_valid_inputs(t *testing.T) {
-  wlInput := []string{"1,2,3,4"}
+func TestValidInputs(t *testing.T) {
+  wlInput := []string{"4,4,4,4"}
   gbInput := []string{"abcd\nefgh\nijkl\nmnop"}
   expectedBoard := &board{
     size:       4,
@@ -31,7 +31,7 @@ func test_valid_inputs(t *testing.T) {
       {10, 11, 14},
     },
   }
-  expectedWlInts := []int{1, 2, 3, 4}
+  expectedWlInts := []int{4,4,4,4}
 
   board, wlInts := buildGameBoard(wlInput, gbInput)
 
@@ -40,8 +40,8 @@ func test_valid_inputs(t *testing.T) {
 }
 
     // Handles uppercase characters in the game board input.
-func test_uppercase_characters(t *testing.T) {
-  wlInput := []string{"1,2,3"}
+func TestUppercaseCharacters(t *testing.T) {
+  wlInput := []string{"4,4,4,4"}
   gbInput := []string{"ABCD\nEFGH\nIJKL\nMNOP"}
   expectedBoard := &board{
     size:       4,
@@ -66,7 +66,7 @@ func test_uppercase_characters(t *testing.T) {
       {10, 11, 14},
     },
   }
-  expectedWlInts := []int{1, 2, 3}
+  expectedWlInts := []int{4,4,4,4}
 
   board, wlInts := buildGameBoard(wlInput, gbInput)
 
@@ -75,7 +75,7 @@ func test_uppercase_characters(t *testing.T) {
 }
 
     // Handles special characters in the game board input.
-func test_special_characters(t *testing.T) {
+func TestSpecialCharacters(t *testing.T) {
   wlInput := []string{"1"}
   gbInput := []string{"!@#$\n%^&*\n()_+\n{}[]"}
   expectedBoard := (*board)(nil)
@@ -88,7 +88,7 @@ func test_special_characters(t *testing.T) {
 }
 
     // Returns None when given an empty word list input.
-func test_empty_word_list(t *testing.T) {
+func TestEmptyWordLenghts(t *testing.T) {
   wlInput := []string{}
   gbInput := []string{"abcd\nefgh\nijkl\nmnop"}
 
@@ -99,7 +99,7 @@ func test_empty_word_list(t *testing.T) {
 }
 
     // Returns None when given an empty game board input.
-func test_empty_game_board(t *testing.T) {
+func TestEmptyGameBoard(t *testing.T) {
   wlInput := []string{"1,2,3,4"}
   gbInput := []string{}
 
@@ -110,7 +110,7 @@ func test_empty_game_board(t *testing.T) {
 }
 
     // Returns None when given a word list input with a non-integer value.
-func test_non_integer_word_list(t *testing.T) {
+func TestNonIntegerWordLengths(t *testing.T) {
   wlInput := []string{"1,2,3,a"}
   gbInput := []string{"abcd\nefgh\nijkl\nmnop"}
 
