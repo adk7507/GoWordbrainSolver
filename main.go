@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"time"
 	"context"
 	"github.com/google/uuid"
 	"strings"
@@ -21,13 +20,16 @@ func init() {
 	// Load the english dictionary
 	dict = trieInit()
 	dict.readDictionaryFile("english_cleaned.txt")
+	
+	commsChannels = make(map[string](chan string), 1)
+	dataChannels = make(map[string](chan resultTreeNode), 1)
 }
 
-var dataChannels map[string](chan string)
+var commsChannels map[string](chan string)
+var dataChannels map[string](chan resultTreeNode)
 
 func main() {
 
-	dataChannels = make(map[string](chan string))
 
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static", fs))
@@ -35,7 +37,8 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		uuidString := uuid.New().String()
 		cookie := http.Cookie{ Name: "wbClient", Value: uuidString}
-		dataChannels[uuidString] = make(chan string)
+		commsChannels[uuidString] = make(chan string)
+		dataChannels[uuidString] = make(chan resultTreeNode)
 
 		http.SetCookie(w, &cookie)
 		
@@ -59,11 +62,26 @@ func main() {
         _, cancel := context.WithCancel(r.Context())
         defer cancel()
 				
-		var dataChan chan string
-		dataChan = dataChannels[uuidString]
-		for data := range dataChan {
-			fmt.Printf("data: %s\n\n", data)                
-			fmt.Fprintf(w, "data: %s\n\n", data)
+		var commsChan chan string
+		var rtn resultTreeNode
+		commsChan = commsChannels[uuidString]
+		for data := range commsChan {
+			if data == "Solution!" {
+				rtn = <- dataChannels[uuidString]
+				fmt.Printf("data: %s %s+%s+%s+%s\n\n", 	data, rtn.nextWords[0].word, 
+														rtn.nextWords[0].nextWords[0].word, 
+														rtn.nextWords[0].nextWords[0].nextWords[0].word, 
+														rtn.nextWords[0].nextWords[0].nextWords[0].nextWords[0].word)
+
+				fmt.Fprintf(w, "data: %s %s+%s+%s+%s\n\n", 	data, rtn.nextWords[0].word, 
+														rtn.nextWords[0].nextWords[0].word, 
+														rtn.nextWords[0].nextWords[0].nextWords[0].word, 
+														rtn.nextWords[0].nextWords[0].nextWords[0].nextWords[0].word)
+			} else {
+				fmt.Printf("data: %s\n\n", data)   
+				fmt.Fprintf(w, "data: %s\n\n", data)
+			}
+			             
 			w.(http.Flusher).Flush()
 		}
 		fmt.Printf("end result: %s\n",uuidString)
@@ -122,18 +140,36 @@ func solvePuzzle(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("start solve: %s\n",uuidString)	
 	
 	r.ParseForm()
-	gb, wl := buildGameBoard(r.Form["word-lengths"], r.Form["game-board"])
-	if( gb == nil) {
-		fmt.Println("Invalid input")
-	}
-	gb.printBoard("Game Board: ")
-	fmt.Println(wl)
+
 
 	go func() {
 
-		dataChannels[uuidString] <- "Solving..."
-		time.Sleep(1 * time.Second)
-		dataChannels[uuidString] <- "Solution!"
+		commsChannels[uuidString] <- "Solving."
+		
+
+		gb, wl := buildGameBoard(r.Form["word-lengths"], r.Form["game-board"])
+		if( gb == nil) {
+			fmt.Println("Invalid input")
+		}
+		gb.printBoard("Game Board: ")
+		fmt.Println(wl)
+
+		commsChannels[uuidString] <- "Solving.."
+		rtn := resultTreeNode {
+			word: "",
+			gridIndices: []int{},
+			collapsedBoard: gb,
+			sourceBoard: gb,
+			nextWords: nil,
+		}
+		commsChannels[uuidString] <- "Solving..."
+		findPhrase(0, wl, &rtn, dict)
+
+		
+		commsChannels[uuidString] <- "Solution FOUND!"
+		
+		commsChannels[uuidString] <- "Solution!"
+		dataChannels[uuidString] <- rtn
 	}()
 
 	terr := page.ExecuteTemplate(w, "resultsView.html",nil)
