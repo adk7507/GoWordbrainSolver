@@ -1,8 +1,6 @@
 body {
-    display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     background-color: #c3e6f5;
     font-family: sans-serif;
 }

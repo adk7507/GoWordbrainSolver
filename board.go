@@ -123,22 +123,22 @@ func findPhrase( wordIndex int, wordLengths []int, parentWord *resultTreeNode, d
 	foundWords := findWord(dictionary.root, gameBoard, wordLengths[wordIndex], []int{}, []rune{})
 
 	if len(foundWords) > 0 {
-		parentWord.nextWords = []*resultTreeNode{}
+		parentWord.NextWords = []*resultTreeNode{}
 		for _, fw := range foundWords {
 			rtn := resultTreeNode {
-				word: fw.word,
+				Word: fw.word,
 				gridIndices: fw.tiles,
 				collapsedBoard: fw.collapsedBoard,
 				sourceBoard: gameBoard,
-				nextWords: nil,
+				NextWords: nil,
 			}
 
 			if wordIndex == len(wordLengths) -1 {
-				parentWord.nextWords = append(parentWord.nextWords, &rtn)
+				parentWord.NextWords = append(parentWord.NextWords, &rtn)
 			} else {
 				findPhrase(wordIndex + 1, wordLengths, &rtn, dictionary)
-				if rtn.nextWords != nil && len(rtn.nextWords) > 0 {
-					parentWord.nextWords = append(parentWord.nextWords, &rtn)
+				if rtn.NextWords != nil && len(rtn.NextWords) > 0 {
+					parentWord.NextWords = append(parentWord.NextWords, &rtn)
 				}
 			}			
 		}

@@ -33,7 +33,7 @@ func TestValidInputs(t *testing.T) {
   }
   expectedWlInts := []int{4,4,4,4}
 
-  board, wlInts := buildGameBoard(wlInput, gbInput)
+  board, wlInts := initGameFromUserInput(wlInput, gbInput)
 
   assert.Equal(t, expectedBoard, board)
   assert.Equal(t, expectedWlInts, wlInts)
@@ -68,7 +68,7 @@ func TestUppercaseCharacters(t *testing.T) {
   }
   expectedWlInts := []int{4,4,4,4}
 
-  board, wlInts := buildGameBoard(wlInput, gbInput)
+  board, wlInts := initGameFromUserInput(wlInput, gbInput)
 
   assert.Equal(t, expectedBoard, board)
   assert.Equal(t, expectedWlInts, wlInts)
@@ -81,7 +81,7 @@ func TestSpecialCharacters(t *testing.T) {
   expectedBoard := (*board)(nil)
   expectedWlInts := []int(nil)
 
-  board, wlInts := buildGameBoard(wlInput, gbInput)
+  board, wlInts := initGameFromUserInput(wlInput, gbInput)
 
   assert.Equal(t, expectedBoard, board)
   assert.Equal(t, expectedWlInts, wlInts)
@@ -92,7 +92,7 @@ func TestEmptyWordLenghts(t *testing.T) {
   wlInput := []string{}
   gbInput := []string{"abcd\nefgh\nijkl\nmnop"}
 
-  board, wlInts := buildGameBoard(wlInput, gbInput)
+  board, wlInts := initGameFromUserInput(wlInput, gbInput)
 
   assert.Nil(t, board)
   assert.Nil(t, wlInts)
@@ -103,7 +103,7 @@ func TestEmptyGameBoard(t *testing.T) {
   wlInput := []string{"1,2,3,4"}
   gbInput := []string{}
 
-  board, wlInts := buildGameBoard(wlInput, gbInput)
+  board, wlInts := initGameFromUserInput(wlInput, gbInput)
 
   assert.Nil(t, board)
   assert.Nil(t, wlInts)
@@ -114,7 +114,7 @@ func TestNonIntegerWordLengths(t *testing.T) {
   wlInput := []string{"1,2,3,a"}
   gbInput := []string{"abcd\nefgh\nijkl\nmnop"}
 
-  board, wlInts := buildGameBoard(wlInput, gbInput)
+  board, wlInts := initGameFromUserInput(wlInput, gbInput)
 
   assert.Nil(t, board)
   assert.Nil(t, wlInts)

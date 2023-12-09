@@ -1,20 +1,26 @@
+<script type="text/javascript">
+    var toggler = document.getElementsByClassName("caret");
+    var i;
 
-{{ define "resultTree" }}
-    
-        {{ if gt (len .Things) 0}}
-            <li><span class="caret">{{ .Text }}</span>
+    for (i = 0; i < toggler.length; i++) {
+    toggler[i].addEventListener("click", function() {
+        this.parentElement.querySelector(".nested").classList.toggle("active");
+        this.classList.toggle("caret-down");
+    });
+    }
+</script>
+<div>
+{{ define "resultTree" }}  
+        {{ if gt (len .NextWords) 0}}
+            <li><span class="caret">{{ .Word }}</span>
                 <ul  class="nested">
-                    {{ range .Things }}
-                    {{ template "resultTree" . }}
-                    {{ end }}
+                    {{ range .NextWords }} {{ template "resultTree" . }} {{ end }}
                 </ul>
             </li>
         {{else}}
-            <li><span class="listicle">{{ .Text }}</span></li>
+            <li><span class="listicle">{{ .Word }}</span></li>
         {{ end }}
-
 {{ end }}
-
-{{ range . }}
-<ul id="myUL">{{ template "resultTree" . }}</ul>
+{{ range . }}<ul id="myUL">{{ template "resultTree" . }}</ul> 
 {{ end }}
+</div>
