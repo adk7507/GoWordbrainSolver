@@ -151,7 +151,7 @@ type foundWord struct {
 	collapsedBoard *board
 }
 
-func findWord(parentChar *dictionaryTreeNode, gameBoard *board, wordLength int, visitedTiles []int, visitedChars []rune) ([]foundWord) {
+func findWord(parentChar *dictionaryTrieNode, gameBoard *board, wordLength int, visitedTiles []int, visitedChars []rune) ([]foundWord) {
 
 	if len(visitedChars) == 0 {
 		allFoundWords := []foundWord{}

@@ -6,25 +6,25 @@ import (
     "bufio"
 )
 
-type dictionaryTreeNode struct {
-    children [26]*dictionaryTreeNode
+type dictionaryTrieNode struct {
+    children [26]*dictionaryTrieNode
     wordEnds bool
 }
 
 // Search branch beginning with a specific trie node
-func (n *dictionaryTreeNode) findChildNode(letter rune) *dictionaryTreeNode {
+func (n *dictionaryTrieNode) findChildNode(letter rune) *dictionaryTrieNode {
     index := letter - 'a'
     return n.children[index]
 }
 
 type dictionaryTrie struct {
-    root *dictionaryTreeNode
+    root *dictionaryTrieNode
 }
 
 //inititlaizing a new dictionary trie 
 func trieInit() *dictionaryTrie {
     t := new(dictionaryTrie)
-    t.root = new(dictionaryTreeNode)
+    t.root = new(dictionaryTrieNode)
     return t
 }
 
@@ -35,7 +35,7 @@ func (t *dictionaryTrie) insert(word string) {
         index := letter - 'a'
 
         if current.children[index] == nil {
-            current.children[index] = new(dictionaryTreeNode)
+            current.children[index] = new(dictionaryTrieNode)
         }
         current = current.children[index]
     }
